@@ -4,61 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculator</title>
-    <style>
-        /* Basic styling for the body and calculator container */
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            background-color: #F6D8AE;
-        }
-        .calculator {
-            background-color: #F6D8AE;
-            border-radius: 15px;
-            box-shadow: 0px 0px 13px rgba(59, 58, 58, 0.421);
-            padding: 20px;
-        }
-        /* Styling for the input display */
-        .calculator input {
-            width: 92%;
-            padding: 10px;
-            font-size: 24px;
-            margin-bottom: 10px;
-            border: 3px solid #000000; /* Darker border color */
-            border-radius: 4px;
-            color: #000; /* Text color */
-            background-color: #FFF; /* Background color */
-            text-align: right; /* Align text to the right */
-        }
-        /* Styling for buttons */
-        .calculator button {
-            width: 70px;
-            height: 70px;
-            font-size: 24px;
-            margin: 5px;
-            cursor: pointer;
-            border: none;
-            border-radius: 4px;
-            background-color: #000000;
-            color: white;
-        }
-        /* Styling for button hover effect */
-        .calculator button:hover {
-            background-color: #444;
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css"> <!-- Link to the external CSS file -->
 </head>
 <body>
 
     <!-- Calculator container -->
     <div class="calculator">
-        <!-- Display input field -->
         <input type="text" id="display" disabled />
         <br />
-        <!-- Calculator buttons -->
         <button onclick="appendNumber(7)">7</button>
         <button onclick="appendNumber(8)">8</button>
         <button onclick="appendNumber(9)">9</button>
@@ -78,86 +31,8 @@
         <button onclick="clearDisplay()">C</button>
         <button onclick="calculateResult()">=</button>
         <button onclick="chooseOperation('+')">+</button>
-        <button onclick="chooseOperation('')">+</button>
     </div>
 
-    <script>
-        // Variables to keep track of the calculator state
-        let display = document.getElementById('display');
-        let currentInput = '';
-        let operation = null;
-        let previousInput = '';
-
-        // Function to append a number to the current input
-        function appendNumber(number) {
-            currentInput += number;
-            display.value = currentInput;
-        }
-
-        // Function to set the chosen operation (+, -, *, /)
-        function chooseOperation(op) {
-            if (currentInput === '') return; // No input to process
-            if (previousInput !== '') {
-                calculateResult(); // Calculate if there's a pending operation
-            }
-            operation = op;
-            previousInput = currentInput;
-            currentInput = '';
-        }
-
-        // Function to calculate the result based on the chosen operation
-        function calculateResult() {
-            let result;
-            const prev = parseFloat(previousInput);
-            const current = parseFloat(currentInput);
-            if (isNaN(prev) || isNaN(current)) return; // Invalid input
-            switch (operation) {
-                case '+':
-                    result = prev + current;
-                    break;
-                case '-':
-                    result = prev - current;
-                    break;
-                case '*':
-                    result = prev * current;
-                    break;
-                case '/':
-                    result = prev / current;
-                    break;
-                default:
-                    return;
-            }
-            currentInput = result;
-            operation = null;
-            previousInput = '';
-            display.value = result;
-        }
-
-        // Function to clear the display and reset inputs
-        function clearDisplay() {
-            currentInput = '';
-            previousInput = '';
-            operation = null;
-            display.value = '';
-        }
-
-        // Function to handle keyboard input
-        function handleKeyboardInput(event) {
-            const key = event.key;
-            if (key >= '0' && key <= '9') {
-                appendNumber(key);
-            } else if (key === '+' || key === '-' || key === '*' || key === '/') {
-                chooseOperation(key);
-            } else if (key === 'Enter' || key === '=') {
-                calculateResult();
-            } else if (key === 'Backspace') {
-                clearDisplay();
-            }
-        }
-
-        // Event listener for keyboard input
-        document.addEventListener('keydown', handleKeyboardInput);
-    </script>
-
+    <script src="script.js"></script> <!-- Link to the external JavaScript file -->
 </body>
 </html>
